@@ -68,11 +68,37 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.8.1")
     implementation("com.squareup.retrofit2:converter-gson:2.8.1")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.8.1")
+    implementation("com.squareup.retrofit2:converter-moshi:2.4.0")
 
+    //MOSHI
+    implementation("com.squareup.moshi:moshi:1.11.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.11.0")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.11.0")
 
     //ROOM
     implementation("androidx.room:room-runtime:2.2.5")
     kapt("androidx.room:room-compiler:2.2.5")
     implementation("androidx.room:room-rxjava2:2.2.5")
+
+    //GLIDE
+    implementation("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
+
+    //KOIN
+    implementation("org.koin:koin-core:2.1.0")
+    implementation("org.koin:koin-core:2.1.0")
+    implementation("org.koin:koin-android:2.1.0")
+    implementation("org.koin:koin-androidx-scope:2.1.0")
+    implementation("org.koin:koin-androidx-viewmodel:2.1.0")
+    implementation("org.koin:koin-androidx-fragment:2.1.0")
+
+    //PAGING
+    implementation("androidx.paging:paging-runtime:3.0.0-alpha09")
+    implementation("androidx.paging:paging-compose:1.0.0-alpha02")
+
+    //UNIFLOW
+    implementation("io.uniflow:uniflow-core:0.11.6")
+    implementation("io.uniflow:uniflow-android:0.11.6")
+    implementation("io.uniflow:uniflow-androidx:0.11.6")
 
 }

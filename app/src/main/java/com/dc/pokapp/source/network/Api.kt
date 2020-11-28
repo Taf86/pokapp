@@ -9,9 +9,9 @@ import retrofit2.http.Query
 interface Api {
 
     @GET("pokemon/")
-    fun getPokemonPage(
+    suspend fun getPokemonPage(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): Call<Page<Pokemon>>
+    ): Page<Pokemon>
 
 }

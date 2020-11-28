@@ -1,15 +1,14 @@
-package com.dc.pokapp
+package com.dc.pokapp.view
 
-import android.app.Application
 import com.dc.pokapp.di.Di
 import org.koin.core.context.startKoin
 
-class PokappApplication : Application() {
+class Application : android.app.Application() {
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
-            modules(Di.networkModule)
+            modules(Di.modules)
         }
     }
 

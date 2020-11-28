@@ -16,10 +16,6 @@ class PokemonLoadStateViewHolder(
 ) {
     fun bind(loadState: LoadState) = with(itemView) {
         progressBar.isVisible = loadState is LoadState.Loading
-        errorTextView.apply {
-            isVisible = loadState is LoadState.Error
-            text = (loadState as? LoadState.Error)?.error?.localizedMessage
-        }
         retryButton.apply {
             isVisible = loadState is LoadState.Error
             setOnClickListener {

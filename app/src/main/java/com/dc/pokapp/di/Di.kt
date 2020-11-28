@@ -3,7 +3,7 @@ package com.dc.pokapp.di
 import com.dc.pokapp.paging.ListPagedSource
 import com.dc.pokapp.repository.Repository
 import com.dc.pokapp.source.network.Network
-import com.dc.pokapp.viewModel.ListViewModel
+import com.dc.pokapp.viewModel.AppViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -25,7 +25,7 @@ object Di {
 
 
     private val viewModelModule = module {
-        viewModel { ListViewModel(get()) }
+        viewModel { AppViewModel(get(), get()) }
     }
 
 

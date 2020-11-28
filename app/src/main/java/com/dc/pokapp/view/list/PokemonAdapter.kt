@@ -5,13 +5,14 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.dc.pokapp.model.Pokemon
 
-class PokemonAdapter : PagingDataAdapter<Pokemon, PokemonViewHolder>(PokemonComparator) {
+class PokemonAdapter(private val onItemSelected: (pokemon: Pokemon) -> Unit) :
+    PagingDataAdapter<Pokemon, PokemonViewHolder>(PokemonComparator) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): PokemonViewHolder {
-        return PokemonViewHolder(parent) {}
+        return PokemonViewHolder(parent) { pokemon -> onItemSelected(pokemon) }
     }
 
 

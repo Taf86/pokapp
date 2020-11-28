@@ -23,9 +23,13 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
         recyclerView.also {
             it.layoutManager = LinearLayoutManager(context)
-            it.adapter = this.adapter
+            it.setHasFixedSize(true)
+            it.adapter = this.adapter.withLoadStateHeaderAndFooter(
+                header = PokemonLoadStateAdapter { this.adapter.retry() },
+                footer = PokemonLoadStateAdapter { this.adapter.retry() }
+            )
         }
-        
+
         onEvents(listViewModel) { event ->
             when (val data = event.take()) {
                 is ListEvent.SendPagingData -> lifecycleScope.launch {

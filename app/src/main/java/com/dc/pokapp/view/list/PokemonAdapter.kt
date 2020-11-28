@@ -15,18 +15,15 @@ class PokemonAdapter : PagingDataAdapter<Pokemon, PokemonViewHolder>(PokemonComp
     }
 
 
-    override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        val item = getItem(position)
-        item?.let { holder.bindPokemon(it) }
-    }
+    override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) =
+        getItem(position)?.let { holder.bindPokemon(it) } ?: Unit
+
 
     object PokemonComparator : DiffUtil.ItemCallback<Pokemon>() {
-        override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
-            return oldItem.name == newItem.name
-        }
+        override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean =
+            oldItem.name == newItem.name
 
-        override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
-            return oldItem == newItem
-        }
+        override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean =
+            oldItem == newItem
     }
 }

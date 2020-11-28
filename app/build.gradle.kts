@@ -93,7 +93,6 @@ dependencies {
 
     //PAGING
     implementation("androidx.paging:paging-runtime:3.0.0-alpha09")
-    implementation("androidx.paging:paging-compose:1.0.0-alpha02")
 
     //UNIFLOW
     implementation("io.uniflow:uniflow-core:0.11.6")

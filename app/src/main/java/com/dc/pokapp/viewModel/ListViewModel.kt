@@ -11,13 +11,14 @@ import com.dc.pokapp.paging.ListPagedSource
 import io.uniflow.androidx.flow.AndroidDataFlow
 import io.uniflow.core.threading.launchOnIO
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class ListViewModel(
     private val listPagedSource: ListPagedSource
 ) : AndroidDataFlow() {
 
     init {
-        viewModelScope.launchOnIO {
+        viewModelScope.launch {
             Pager(PagingConfig(pageSize = 10)) {
                 listPagedSource
             }

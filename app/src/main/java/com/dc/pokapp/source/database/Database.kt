@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.room.*
 import com.dc.pokapp.model.Pokemon
 import com.dc.pokapp.model.PokemonDetail
+import com.dc.pokapp.model.ServerTotalCount
 
 @Database(
     entities = [
         Pokemon::class,
-        PokemonDetail::class
+        PokemonDetail::class,
+        ServerTotalCount::class
     ],
     version = 1,
     exportSchema = true

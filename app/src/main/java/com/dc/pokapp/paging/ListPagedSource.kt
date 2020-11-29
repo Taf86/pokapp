@@ -8,14 +8,16 @@ class ListPagedSource(
     private val repo: Repository
 ) : PagingSource<Int, Pokemon>() {
 
+    override val keyReuseSupported: Boolean = true
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Pokemon> {
         return try {
             val nextPageNumber = params.key ?: 0
             val response = repo.getList(nextPageNumber * 10, 10)
             LoadResult.Page(
                 data = response.results,
-                prevKey = response.previous?.let{nextPageNumber - 1},
-                nextKey = response.next?.let{nextPageNumber + 1}
+                prevKey = response.previous,
+                nextKey = response.next
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

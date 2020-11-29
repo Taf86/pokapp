@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.dc.pokapp.model.Pokemon
 import com.dc.pokapp.model.PokemonDetail
+import com.dc.pokapp.model.ServerTotalCount
 
 @Dao
 interface Dao {
@@ -21,5 +22,11 @@ interface Dao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(detail: PokemonDetail)
+
+    @Query("SELECT * FROM server_total_count LIMIT 1")
+    suspend fun getServerTotalCount(): ServerTotalCount?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(serverTotalCount: ServerTotalCount)
 
 }

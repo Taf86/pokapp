@@ -27,6 +27,9 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
     private val loadStateListener = { loadState: CombinedLoadStates ->
 
+        refreshButton.isVisible =
+            loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
+
         if (loadState.refresh is LoadState.Loading) {
             retryButton.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
@@ -56,7 +59,9 @@ class ListFragment : Fragment(R.layout.fragment_list) {
             adapter.retry()
         }
 
-
+        refreshButton.setOnClickListener {
+            adapter.refresh()
+        }
 
         recyclerView.also {
             it.layoutManager = LinearLayoutManager(context)

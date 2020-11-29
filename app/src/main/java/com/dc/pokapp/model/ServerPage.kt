@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class ServerPage<T>(
+data class ServerPage(
     @field:Json(name = "count")
     val count: Int,
 
@@ -15,5 +15,5 @@ data class ServerPage<T>(
     val previous: String?,
 
     @field:Json(name = "results")
-    val results: List<T>
+    val results: List<Pokemon>
 )

@@ -1,7 +1,7 @@
 package com.dc.pokapp.model
 
-data class LocalPage<T>(
-    val next: Int?,
-    val previous: Int?,
-    val results: List<T>
+data class LocalPage(
+    val total: Int = 0,
+    val items: List<Pokemon> = emptyList(),
+    val nextPage: Int? = null
 )

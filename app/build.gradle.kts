@@ -76,9 +76,12 @@ dependencies {
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.11.0")
 
     //ROOM
-    implementation("androidx.room:room-runtime:2.2.5")
-    kapt("androidx.room:room-compiler:2.2.5")
-    implementation("androidx.room:room-ktx:2.2.5")
+    implementation("androidx.room:room-runtime:2.3.0-alpha03")
+    implementation("androidx.room:room-ktx:2.3.0-alpha03")
+    kapt("androidx.room:room-compiler:2.3.0-alpha03")
+
+    //PAGING
+    implementation("androidx.paging:paging-runtime:3.0.0-alpha09")
 
     //GLIDE
     implementation("com.github.bumptech.glide:glide:4.11.0")
@@ -91,8 +94,7 @@ dependencies {
     implementation("org.koin:koin-androidx-viewmodel:2.1.0")
     implementation("org.koin:koin-androidx-fragment:2.1.0")
 
-    //PAGING
-    implementation("androidx.paging:paging-runtime:3.0.0-alpha09")
+
 
     //UNIFLOW
     implementation("io.uniflow:uniflow-core:0.11.6")

@@ -13,7 +13,7 @@ interface Api {
     suspend fun getPokemonPage(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): ServerPage<Pokemon>
+    ): ServerPage
 
     @GET("pokemon/{name}")
     suspend fun getPokemonDetail(

@@ -4,13 +4,13 @@ import android.content.Context
 import androidx.room.*
 import com.dc.pokapp.model.Pokemon
 import com.dc.pokapp.model.PokemonDetail
-import com.dc.pokapp.model.ServerTotalCount
+import com.dc.pokapp.model.RemoteKeys
 
 @Database(
     entities = [
         Pokemon::class,
         PokemonDetail::class,
-        ServerTotalCount::class
+        RemoteKeys::class
     ],
     version = 1,
     exportSchema = true

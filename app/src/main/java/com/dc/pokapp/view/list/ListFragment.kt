@@ -10,44 +10,34 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.dc.pokapp.R
 import com.dc.pokapp.event.AppEvent
 import com.dc.pokapp.viewModel.AppViewModel
 import io.uniflow.androidx.flow.onEvents
 import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ListFragment : Fragment(R.layout.fragment_list) {
 
     private val appViewModel: AppViewModel by sharedViewModel()
-    private val adapter =
-        PokemonAdapter { pokemon -> appViewModel.openPokemonDetail(pokemon.name) }
+    private val adapter = PokemonAdapter { pokemon ->
+        appViewModel.openPokemonDetail(pokemon.name)
+    }
 
     private val loadStateListener = { loadState: CombinedLoadStates ->
-
-        refreshButton.isVisible =
-            loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
-
-        if (loadState.refresh is LoadState.Loading) {
-            retryButton.visibility = View.GONE
-            progressBar.visibility = View.VISIBLE
-        } else {
-            progressBar.visibility = View.GONE
-
-            val errorState = when {
-                loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-                loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
-                loadState.refresh is LoadState.Error -> {
-                    retryButton.visibility = View.VISIBLE
-                    loadState.refresh as LoadState.Error
-                }
-                else -> null
-            }
-            errorState?.let {
-                Toast.makeText(context, it.error.message, Toast.LENGTH_LONG).show()
-            }
+        val errorState = loadState.source.append as? LoadState.Error
+            ?: loadState.source.prepend as? LoadState.Error
+            ?: loadState.append as? LoadState.Error
+            ?: loadState.prepend as? LoadState.Error
+        errorState?.let {
+            Toast.makeText(
+                requireContext(),
+                "\uD83D\uDE28 Wooops ${it.error}",
+                Toast.LENGTH_LONG
+            ).show()
         }
         Unit
     }
@@ -55,22 +45,18 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        retryButton.setOnClickListener {
-            adapter.retry()
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            if (menuItem.itemId == R.id.refresh) {
+                appViewModel.search()
+            }
+            menuItem.itemId == R.id.refresh
         }
 
-        refreshButton.setOnClickListener {
-            adapter.refresh()
-        }
-
-        recyclerView.also {
-            it.layoutManager = LinearLayoutManager(context)
-            it.setHasFixedSize(true)
-            it.adapter = this.adapter.withLoadStateHeaderAndFooter(
-                header = PokemonLoadStateAdapter { this.adapter.retry() },
-                footer = PokemonLoadStateAdapter { this.adapter.retry() }
-            )
-        }
+        recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = PokemonLoadStateAdapter { adapter.retry() },
+            footer = PokemonLoadStateAdapter { adapter.retry() }
+        )
+        retryButton.setOnClickListener { adapter.retry() }
 
         onEvents(appViewModel) { event ->
             when (val data = event.take()) {
@@ -78,17 +64,15 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                     adapter.submitData(data.pagingData)
                 }
 
-                is AppEvent.DetailLoading -> {
-                    progressBar.isVisible = true
-                }
-
                 is AppEvent.DetailError -> {
-                    progressBar.isVisible = false
-                    Toast.makeText(context, data.error.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        context,
+                        "\uD83D\uDE28 Wooops ${data.error.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
 
                 is AppEvent.DetailReady -> {
-                    progressBar.isVisible = false
                     findNavController().navigate(
                         ListFragmentDirections.actionListToDetail(),
                         FragmentNavigatorExtras(constraintLayout to constraintLayout.transitionName)
@@ -98,7 +82,6 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         }
     }
 
-
     override fun onResume() {
         super.onResume()
         adapter.addLoadStateListener(loadStateListener)
@@ -106,8 +89,6 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
     override fun onPause() {
         super.onPause()
-
         adapter.removeLoadStateListener(loadStateListener)
-
     }
 }

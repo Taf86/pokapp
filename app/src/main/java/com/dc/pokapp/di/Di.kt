@@ -1,6 +1,5 @@
 package com.dc.pokapp.di
 
-import com.dc.pokapp.paging.ListPagedSource
 import com.dc.pokapp.repository.Repository
 import com.dc.pokapp.source.database.AppDatabase
 import com.dc.pokapp.source.network.Network
@@ -22,14 +21,8 @@ object Di {
         factory { Repository(get(), get()) }
     }
 
-
-    private val pagedDataSourceModule = module {
-        factory { ListPagedSource(get()) }
-    }
-
-
     private val viewModelModule = module {
-        viewModel { AppViewModel(get(), get()) }
+        viewModel { AppViewModel(get()) }
     }
 
 
@@ -37,7 +30,6 @@ object Di {
         get() = listOf(
             sourcesModule,
             repositoryModule,
-            pagedDataSourceModule,
             viewModelModule
         )
 }

@@ -9,21 +9,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:navigationIcon="@drawable/ic_back"
+            app:navigationIcon="@drawable/ic_back"
+            app:titleTextColor="?colorOnPrimary"
             tools:title="Bulbasaur" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
 
     <ScrollView
-        android:transitionName="sharedElement"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:transitionName="sharedElement"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout

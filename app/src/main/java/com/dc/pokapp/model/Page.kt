@@ -6,9 +6,6 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class Page<T>(
 
-    @field:Json(name = "count")
-    val count: Long,
-
     @field:Json(name = "next")
     val next: String?,
 

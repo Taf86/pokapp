@@ -1,6 +1,7 @@
 package com.dc.pokapp.view
 
 import com.dc.pokapp.di.Di
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 class Application : android.app.Application() {
@@ -9,7 +10,9 @@ class Application : android.app.Application() {
 
         startKoin {
             modules(Di.modules)
+            androidContext(this@Application)
         }
+
     }
 
 

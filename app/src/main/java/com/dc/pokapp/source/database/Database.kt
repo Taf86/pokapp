@@ -1,24 +1,33 @@
 package com.dc.pokapp.source.database
 
-import android.app.Application
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import android.content.Context
+import androidx.room.*
+import com.dc.pokapp.model.Pokemon
+import com.dc.pokapp.model.PokemonDetail
 
-//@Database(
-//    entities = [],
-//    version = 1,
-//    exportSchema = true
-//)
-//abstract class AppDatabase : RoomDatabase() {
-//
-//    companion object {
-//        fun provideAppDatabase(application: Application): AppDatabase {
-//            return Room
-//                .databaseBuilder<AppDatabase>(application, AppDatabase::class.java, "pokapp-db")
-//                .build()
-//        }
-//
-//
-//    }
-//}
+@Database(
+    entities = [
+        Pokemon::class,
+        PokemonDetail::class
+    ],
+    version = 1,
+    exportSchema = true
+)
+@TypeConverters(Converter::class)
+abstract class AppDatabase : RoomDatabase() {
+
+    abstract fun getDao(): Dao
+
+    companion object {
+        fun buildAppDatabase(context: Context): AppDatabase {
+            return Room
+                .databaseBuilder<AppDatabase>(context, AppDatabase::class.java, "pokapp-db")
+                .fallbackToDestructiveMigration()
+                .build()
+        }
+
+        fun buildDao(database: AppDatabase): Dao {
+            return database.getDao()
+        }
+    }
+}
